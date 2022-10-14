@@ -26,7 +26,7 @@ config :pleroma, :media_proxy,
 config :pleroma, Pleroma.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "pleroma",
-  password: System.get_env("DB_PASS"),
+  password: System.get_env("PGPASSWORD"),
   database: "pleroma",
   hostname: System.get_env("PLEROMA_POSTGRESQL_SERVICE_HOST")
 
