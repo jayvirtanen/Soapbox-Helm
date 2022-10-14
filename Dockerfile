@@ -57,8 +57,6 @@ ENV DB_USER=pleroma
 
 COPY --from=build --chown=pleroma:0 /rebased/release ${HOME}
 
-RUN ls ${HOME}
-
 COPY static ${DATA}/static
 
 COPY prod.secret.exs /etc/pleroma/config.exs
