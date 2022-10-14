@@ -1,7 +1,8 @@
 Install your Soapbox instance on kubernetes!
 
-1. Edit the prod.secret.exs and values.yaml file (in the helm chart directory) with your instance details
-2. Run the Jenkins job to build your instance and deploy it using helm
+1. Run the Jenkins job to build your instance and deploy it using helm
+
+At the moment you should generate your own salts and keys for the prod.secret.exs. Other instance details are populated via Jenkins parameters when kicking off the build. 
 
 Requirements:
 
