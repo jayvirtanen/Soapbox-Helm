@@ -17,7 +17,7 @@ pipeline {
       sh "sed -i -- 's/ADMIN_EMAIL/$admin_email/g' values.yaml prod.secret.exs"
       sh "sed -i -- 's#IMAGE_NAME#$image_name#g' values.yaml"
       sh "sed -i -- 's/TAG/$tag/g' values.yaml"
-      sh "sed -i -- 's/DBPASSWORD/$db_pass/g' values.yaml Dockerfile"
+      sh "sed -i -- 's/DBPASSWORD/$db_pass/g' values.yaml Dockerfile prod.secret.exs"
       sh 'cat values.yaml'
       sh 'cat prod.secret.exs'
       sh 'cat Dockerfile'
