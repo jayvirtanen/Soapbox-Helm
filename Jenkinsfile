@@ -6,10 +6,12 @@ pipeline {
 	}
   stages {
     stage('Docker Build') {
-      steps withEnv(['DOCKER_BUILDKIT=0']){
+      steps {
+        withEnv(['DOCKER_BUILDKIT=0']){
         sh 'echo $DOCKER_BUILDKIT'
         sh 'echo "$image_name":"$tag"'
         sh 'docker build . -t "$image_name":"$tag"'
+        }
       }
     }
     stage('Push Docker Image'){
