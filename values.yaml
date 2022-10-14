@@ -67,9 +67,10 @@ postgresql:
   image:
     repository: bitnami/postgresql
     tag: 13.4.0-debian-10-r39
-  postgresqlUsername: pleroma
-  postgresqlPassword: password
-  postgresqlDatabase: pleroma
+  auth:
+    username: pleroma
+    password: password
+    database: pleroma
   postggresqlExtendedConf:
     listenAddresses: "*"
     maxConnections: "200"
