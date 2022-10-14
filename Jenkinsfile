@@ -11,7 +11,7 @@ pipeline {
     stage('Gather Files'){
       steps{
       sh 'curl -L https://gitlab.com/soapbox-pub/soapbox/-/jobs/artifacts/develop/download?job=build-production -o soapbox.zip'
-      sh 'unzip soapbox.zip'
+      sh 'unzip -f soapbox.zip'
       sh "sed -i -- 's/INSTANCE_NAME/$instance_name/g' *"
       sh "sed -i -- 's/ADMIN_EMAIL/$admin_email/g' *"
       sh 'cat values.yaml'
