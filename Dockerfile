@@ -61,7 +61,7 @@ COPY static ${DATA}/static
 
 COPY prod.secret.exs /etc/pleroma/config.exs
 
-ENV DB_PASS=DBPASSWORD
+ENV PGPASSWORD=DBPASSWORD
 
 EXPOSE 4000
 
