@@ -13,9 +13,9 @@ config :pleroma, Pleroma.Web.Endpoint,
    signing_salt: "JUssJFa0"
 
 config :pleroma, :instance,
-  name: "INSTANCE NAME",
-  email: "ADMIN EMAIL",
-  notify_email: "ADMIN EMAIL",
+  name: "INSTANCE_NAME",
+  email: "ADMIN_EMAIL",
+  notify_email: "ADMIN_EMAIL",
   limit: 5000,
   registrations_open: true
 

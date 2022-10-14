@@ -37,7 +37,7 @@ ingress:
   tls:
     - hosts:
         - "INSTANCE_NAME"
-      secretName: INSTANCE_NAME-TLS
+      secretName: INSTANCE_NAME-tls
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
