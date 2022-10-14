@@ -13,5 +13,5 @@ https://gitlab.com/soapbox-pub/rebased
 https://gitlab.com/soapbox-pub/soapbox
 
 To Do:
-Generate salt, keys, and tokens during pipeline
+Generate salt, keys, and tokens during pipeline \n
 Use secrets for DB credentials
