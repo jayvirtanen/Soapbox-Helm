@@ -1,9 +1,9 @@
 pipeline {
   agent any
   parameters {
-  string defaultValue: 'jalmarivirtanen/pleroma', name: 'image_name'
+  string defaultValue: 'myrepo/pleroma', name: 'image_name'
   string defaultValue: 'latest', name: 'tag'
-  string defaultValue: 'social.jvirtanen.com', name: 'instance_name'
+  string defaultValue: 'social.mysite.com', name: 'instance_name'
   string defaultValue: 'my@email.com', name: 'admin_email'
   string defaultValue: 'password', name: 'db_pass'
   string defaultValue: 'pleroma', name: 'namespace'
