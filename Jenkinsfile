@@ -20,6 +20,7 @@ pipeline {
       sh "sed -i -- 's/DBPASSWORD/$db_pass/g' values.yaml"
       sh 'cat values.yaml'
       sh 'cat prod.secret.exs'
+      sh 'cat Dockerfile'
       }
     }
     stage('Docker Build') {
