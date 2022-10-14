@@ -35,7 +35,7 @@ pipeline {
     }
     stage('Deploy with Helm') {
       steps {
-           sh 'helm upgrade --install helm/pleroma/ -f values.yaml --namespace $namespace'
+           sh 'helm upgrade --install pleroma helm/pleroma/ -f values.yaml --namespace $namespace'
         }
       }
     }
