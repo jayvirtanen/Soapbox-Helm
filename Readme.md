@@ -6,3 +6,4 @@ Install your Soapbox instance on kubernetes!
 Requirements:
 
 1. Docker and Helm configured on your build agent with access to the k8s cluster and the image on your image registry of choice.
+2. A TLS secret in your k8s cluster named instance.name-tls (for example social.mysite.com-tls)
