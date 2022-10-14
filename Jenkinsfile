@@ -7,12 +7,12 @@ pipeline {
   stages {
     stage('Docker Build') {
       steps {
-        sh 'podman build . -t "$image_name":"$tag"'
+        sh 'docker build . -t "$image_name":"$tag"'
       }
     }
     stage('Push Docker Image'){
         steps{
-            sh 'podman push "$image_name":"$tag"'
+            sh 'docker push "$image_name":"$tag"'
         }
     }
     stage('Deploy with Helm') {
