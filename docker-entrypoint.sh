@@ -7,6 +7,8 @@ while ! pg_isready -U pleroma -d postgres://${PLEROMA_POSTGRESQL_SERVICE_HOST}:5
     sleep 1s
 done
 
+sleep 50000
+
 echo "-- Running migrations..."
 $HOME/bin/pleroma_ctl migrate
 
