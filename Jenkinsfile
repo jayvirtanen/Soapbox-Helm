@@ -36,6 +36,7 @@ pipeline {
     stage('Deploy with Helm') {
       steps {
            sh 'PATH="/usr/local/bin:${PATH}"'
+           sh 'whoami'
            sh 'kubectl get ns'
            sh '/usr/local/bin/helm upgrade --install pleroma helm/pleroma/ -f values.yaml --namespace $namespace'
         }
