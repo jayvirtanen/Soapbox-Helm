@@ -6,6 +6,7 @@ pipeline {
   string defaultValue: 'social.mysite.net', name: 'instance_name'
   string defaultValue: 'my@email.com', name: 'admin_email'
   string defaultValue: '11111111111111111111111', name: 'DB_PASS'
+  string defaultValue: 'default', name: 'namespace'
 	}
   stages {
     stage('Gather Files'){
@@ -34,7 +35,7 @@ pipeline {
     }
     stage('Deploy with Helm') {
       steps {
-           sh 'helm upgrade --install helm/pleroma/ -f helm/pleroma/values.yaml'
+           sh 'helm upgrade --install helm/pleroma/ -f helm/pleroma/values.yaml --namespace $namespace'
         }
       }
     }
