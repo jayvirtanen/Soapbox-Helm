@@ -11,3 +11,6 @@ Requirements:
 This project uses the latest version of the Rebased backend and Soapbox Frontend:
 https://gitlab.com/soapbox-pub/rebased
 https://gitlab.com/soapbox-pub/soapbox
+
+To Do:
+Generate salt, keys, and tokens during pipeline
