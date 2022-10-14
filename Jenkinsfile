@@ -7,6 +7,7 @@ pipeline {
   stages {
     stage('Docker Build') {
       steps {
+        sh 'echo "$image_name":"$tag"'
         sh 'docker build . -t "$image_name":"$tag"'
       }
     }
