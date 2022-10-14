@@ -17,12 +17,13 @@ RUN cd rebased &&\
     mkdir release &&\
     mix release --path release
 
-
-
 FROM ubuntu:22.04
 
 ARG BUILD_DATE
 ARG VCS_REF
+ARG HOME=/opt/pleroma
+ARG DATA=/var/lib/pleroma
+ARG DEBIAN_FRONTEND=noninteractive
 
 LABEL maintainer="MAINTAINER" \
     org.opencontainers.image.title="pleroma" \
@@ -34,10 +35,6 @@ LABEL maintainer="MAINTAINER" \
     org.opencontainers.image.url="INSTANCE URL" \
     org.opencontainers.image.revision=$VCS_REF \
     org.opencontainers.image.created=$BUILD_DATE
-
-ARG HOME=/opt/pleroma
-ARG DATA=/var/lib/pleroma
-ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update &&\
 	apt install -y --no-install-recommends postgresql-client net-tools libmagic-dev imagemagick ffmpeg libimage-exiftool-perl unzip libssl-dev libncurses5-dev unzip curl &&\
