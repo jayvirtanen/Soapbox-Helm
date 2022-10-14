@@ -1,12 +1,12 @@
 pipeline {
   agent any
   parameters {
-  string defaultValue: 'myrepo/pleroma', name: 'image_name'
+  string defaultValue: 'jalmarivirtanen/pleroma', name: 'image_name'
   string defaultValue: 'latest', name: 'tag'
-  string defaultValue: 'social.mysite.net', name: 'instance_name'
+  string defaultValue: 'social.jvirtanen.com', name: 'instance_name'
   string defaultValue: 'my@email.com', name: 'admin_email'
   string defaultValue: '11111111111111111111111', name: 'DB_PASS'
-  string defaultValue: 'default', name: 'namespace'
+  string defaultValue: 'pleroma', name: 'namespace'
 	}
   stages {
     stage('Gather Files'){
