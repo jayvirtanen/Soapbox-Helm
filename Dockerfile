@@ -1,11 +1,19 @@
-FROM elixir:1.12
+FROM ubuntu:20.04 as build
+
+ARG MIX_ENV=prod \
+    OAUTH_CONSUMER_STRATEGIES="twitter facebook google microsoft slack github keycloak:ueberauth_keycloak_strategy"
 
 RUN apt-get update &&\
-    apt-get install -y libmagic-dev cmake libimage-exiftool-perl ffmpeg git &&\
+    apt-get install -y git elixir erlang-dev erlang-nox build-essential cmake libssl-dev libmagic-dev automake autoconf libncurses5-dev git &&\
     git clone https://gitlab.com/soapbox-pub/rebased &&\
     cd rebased &&\
     mix local.hex --force &&\
     mix local.rebar --force
+
+RUN mix deps.get --only prod &&\
+    mkdir release &&\
+    mix release --path release
+
 
 
 FROM ubuntu:20.04
