@@ -7,17 +7,17 @@ pipeline {
   stages {
     stage('Docker Build') {
       steps withEnv(['DOCKER_BUILDKIT=0']){
-        podman build . -t "$image_name":"$tag"
+        sh 'podman build . -t "$image_name":"$tag"'
       }
     }
     stage('Push Docker Image'){
         steps{
-            podman push "$image_name":"$tag"
+            sh 'podman push "$image_name":"$tag"'
         }
     }
     stage('Deploy with Helm') {
       steps {
-            helm upgrade --install helm/pleroma/ -f helm/pleroma/values.yaml
+           sh 'helm upgrade --install helm/pleroma/ -f helm/pleroma/values.yaml'
         }
       }
     }
