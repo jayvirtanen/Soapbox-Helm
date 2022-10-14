@@ -51,7 +51,7 @@ COPY --chown=pleroma:0 /release ${HOME}
 
 COPY static ${DATA}/static
 
-COPY config/prod.secret.exs /etc/pleroma/config.exs
+COPY prod.secret.exs /etc/pleroma/config.exs
 
 EXPOSE 4000
 
