@@ -1,0 +1,110 @@
+# Default values for pleroma.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: PLEROMA-IMAGE
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ${BUILD_NUMBER}
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 4000
+
+ingress:
+  name: external
+  enabled: true
+  certManager: true
+  type: loadBalancer
+  hosts:
+    - host: INSTANCE_NAME
+      paths:
+        - path: "/"
+          port: 4000
+          pathType: Prefix
+  tls:
+    - hosts:
+        - "INSTANCE_NAME"
+      secretName: INSTANCE_NAME-TLS
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: "/"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS, HEAD"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "*"
+    nginx.ingress.kubernetes.io/cors-max-age: "3600"
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+postgresql:
+  enabled: true
+  image:
+    repository: bitnami/postgresql
+    tag: 13.4.0-debian-10-r39
+  postgresqlUsername: pleroma
+  postgresqlPassword: ${DB_PASS}
+  postgresqlDatabase: pleroma
+  postggresqlExtendedConf:
+    listenAddresses: "*"
+    maxConnections: "200"
+  persistence:
+    enabled: true
+    size: 5Gi
+  service:
+    port: 5432
