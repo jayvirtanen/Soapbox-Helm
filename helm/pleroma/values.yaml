@@ -1,10 +1,10 @@
 replicaCount: 1
 
 image:
-  repository: PLEROMA-IMAGE
+  repository: ${image_name}
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ${BUILD_NUMBER}
+  tag: ${tag}
 
 imagePullSecrets: []
 nameOverride: ""
