@@ -1,3 +1,13 @@
+FROM elixir:1.12
+
+RUN apt-get update &&\
+    apt-get install -y libmagic-dev cmake libimage-exiftool-perl ffmpeg git &&\
+    git clone https://gitlab.com/soapbox-pub/rebased &&\
+    cd rebased &&\
+    mix local.hex --force &&\
+    mix local.rebar --force
+
+
 FROM ubuntu:20.04
 
 ARG BUILD_DATE

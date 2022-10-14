@@ -32,7 +32,7 @@ config :pleroma, Pleroma.Repo,
 
 # Configure web push notifications
 config :web_push_encryption, :vapid_details,
-  subject: "mailto:jani.j.k.virtanen@gmail.com",
+  subject: "mailto: Admin Email",
   public_key: "BNC1h1ziIdfyWI9w2Ja9OAmTi4nkZTMNCwhaZIXprs1meU6olaswiLaL8XkjJ_CbVWK8R5ZOHp9XoC3AyP1CJ8w",
   private_key: "3ZpSo7s49__1S92Z2JLIGOdGR64-k6p1aFGu1c4oI8A"
 
