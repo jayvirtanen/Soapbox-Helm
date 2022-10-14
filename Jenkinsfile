@@ -5,7 +5,7 @@ pipeline {
   string defaultValue: 'latest', name: 'tag'
   string defaultValue: 'social.jvirtanen.com', name: 'instance_name'
   string defaultValue: 'my@email.com', name: 'admin_email'
-  string defaultValue: '11111111111111111111111', name: 'db_pass'
+  string defaultValue: 'password', name: 'db_pass'
   string defaultValue: 'pleroma', name: 'namespace'
 	}
   stages {
