@@ -68,7 +68,7 @@ postgresql:
     repository: bitnami/postgresql
     tag: 13.4.0-debian-10-r39
   postgresqlUsername: pleroma
-  postgresqlPassword: ${DB_PASS}
+  postgresqlPassword: DB_PASSWORD
   postgresqlDatabase: pleroma
   postggresqlExtendedConf:
     listenAddresses: "*"

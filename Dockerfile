@@ -61,6 +61,8 @@ COPY static ${DATA}/static
 
 COPY prod.secret.exs /etc/pleroma/config.exs
 
+ENV DB_PASS=DB_PASSWORD
+
 EXPOSE 4000
 
 ENTRYPOINT ["/opt/pleroma/docker-entrypoint.sh"]

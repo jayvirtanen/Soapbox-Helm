@@ -5,7 +5,7 @@ pipeline {
   string defaultValue: 'latest', name: 'tag'
   string defaultValue: 'social.jvirtanen.com', name: 'instance_name'
   string defaultValue: 'my@email.com', name: 'admin_email'
-  string defaultValue: '11111111111111111111111', name: 'DB_PASS'
+  string defaultValue: '11111111111111111111111', name: 'db_pass'
   string defaultValue: 'pleroma', name: 'namespace'
 	}
   stages {
@@ -17,6 +17,7 @@ pipeline {
       sh "sed -i -- 's/ADMIN_EMAIL/$admin_email/g' values.yaml prod.secret.exs"
       sh "sed -i -- 's#IMAGE_NAME#$image_name#g' values.yaml"
       sh "sed -i -- 's/TAG/$tag/g' values.yaml"
+      sh "sed -i -- 's/DBPASSWORD/$db_pass/g' values.yaml"
       sh 'cat values.yaml'
       sh 'cat prod.secret.exs'
       }
