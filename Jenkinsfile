@@ -15,7 +15,7 @@ pipeline {
       sh 'unzip -o soapbox.zip'
       sh "sed -i -- 's/INSTANCE_NAME/$instance_name/g' values.yaml prod.secret.exs"
       sh "sed -i -- 's/ADMIN_EMAIL/$admin_email/g' values.yaml prod.secret.exs"
-      sh "sed -i -- 's/IMAGE_NAME/$image_name/g' values.yaml"
+      sh "sed -i -- 's/IMAGE_NAME/"$image_name"/g' values.yaml"
       sh "sed -i -- 's/TAG/$tag/g' values.yaml"
       sh 'cat values.yaml'
       sh 'cat prod.secret.exs'
