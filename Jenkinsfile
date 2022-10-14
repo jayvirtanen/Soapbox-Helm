@@ -6,7 +6,7 @@ pipeline {
 	}
   stages {
     stage('Docker Build') {
-      steps withEnv(['DOCKER_BUILDKIT=0']){
+      steps {
         sh 'podman build . -t "$image_name":"$tag"'
       }
     }
