@@ -43,8 +43,8 @@ spec:
 	}
   stages {
     stage('Gather Files'){
-      container('ubuntu'){
       steps{
+      container('ubuntu'){
       sh 'curl -L https://gitlab.com/soapbox-pub/soapbox/-/jobs/artifacts/develop/download?job=build-production -o soapbox.zip'
       sh 'unzip -o soapbox.zip'
       sh "sed -i -- 's/INSTANCE_NAME/$instance_name/g' values.yaml prod.secret.exs"
@@ -56,8 +56,8 @@ spec:
       }
     }
     stage('Docker Build') {
-      container('docker'){
       steps {
+        container('docker'){
         withEnv(['DOCKER_BUILDKIT=0']){
         sh 'docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use'
         sh "docker buildx build --platform linux/arm64,linux/amd64 --push --progress plain -t $image_name:$tag ."
@@ -66,8 +66,8 @@ spec:
       }
     }
     stage('Push Docker Image'){
-      container('docker'){
         steps{
+        container('docker'){
             sh 'docker push "$image_name":"$tag"'
         }
       }
