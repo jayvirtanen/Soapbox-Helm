@@ -1,22 +1,3 @@
-FROM ubuntu:22.04 as build
-
-ARG MIX_ENV=prod \
-    OAUTH_CONSUMER_STRATEGIES="twitter facebook google microsoft slack github keycloak:ueberauth_keycloak_strategy" \
-    DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update &&\
-    apt-get install -y git elixir erlang-dev erlang-nox build-essential cmake libssl-dev libmagic-dev automake autoconf libncurses5-dev git &&\
-    git clone https://gitlab.com/soapbox-pub/rebased &&\
-    mix local.hex --force &&\
-    mix local.rebar --force
-
-COPY prod.secret.exs /rebased/config/prod.secret.exs
-
-RUN cd rebased &&\
-    mix deps.get --only prod &&\
-    mkdir release &&\
-    mix release --path release
-
 FROM ubuntu:22.04
 
 ARG BUILD_DATE
@@ -55,7 +36,7 @@ ENV LC_ALL=C.UTF-8
 
 ENV DB_USER=pleroma
 
-COPY --from=build --chown=pleroma:0 /rebased/release ${HOME}
+COPY rebased/release ${HOME}
 
 COPY static ${DATA}/static
 

@@ -21,6 +21,12 @@ spec:
     - sleep
     args:
     - infinity
+  - name: mix
+    image: elixir
+    command:
+    - sleep
+    args:
+    - infinity
   volumes:
     - name: jenkins-docker-cfg
       projected:
@@ -55,6 +61,27 @@ spec:
       sh "sed -i -- 's/TAG/$tag/g' values.yaml"
       sh "sed -i -- 's/DBPASSWORD/$db_pass/g' values.yaml Dockerfile prod.secret.exs"
       }
+      }
+    }
+    stage('Mix Build')
+    {
+      steps{
+        container('mix'){
+          sh '''
+          MIX_ENV=prod \
+          OAUTH_CONSUMER_STRATEGIES="twitter facebook google microsoft slack github keycloak:ueberauth_keycloak_strategy" \
+          DEBIAN_FRONTEND=noninteractive
+          apt-get update
+          apt-get install -y git elixir erlang-dev erlang-nox build-essential cmake libssl-dev libmagic-dev automake autoconf libncurses5-dev git
+          git clone https://gitlab.com/soapbox-pub/rebased
+          mix local.hex --force
+          mix local.rebar --force
+          cd rebased
+          mix deps.get --only prod
+          mkdir release
+          mix release --path release
+          '''
+        }
       }
     }
     stage('Docker Build') {
