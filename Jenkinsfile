@@ -41,6 +41,7 @@ spec:
 	}
   stages {
     stage('Gather Files'){
+      container('ubuntu'){
       steps{
       sh 'curl -L https://gitlab.com/soapbox-pub/soapbox/-/jobs/artifacts/develop/download?job=build-production -o soapbox.zip'
       sh 'unzip -o soapbox.zip'
@@ -50,8 +51,10 @@ spec:
       sh "sed -i -- 's/TAG/$tag/g' values.yaml"
       sh "sed -i -- 's/DBPASSWORD/$db_pass/g' values.yaml Dockerfile prod.secret.exs"
       }
+      }
     }
     stage('Docker Build') {
+      container('docker'){
       steps {
         withEnv(['DOCKER_BUILDKIT=0']){
         sh 'echo $DOCKER_BUILDKIT'
@@ -59,11 +62,14 @@ spec:
         sh 'docker build . -t "$image_name":"$tag"'
         }
       }
+      }
     }
     stage('Push Docker Image'){
+      container('docker'){
         steps{
             sh 'docker push "$image_name":"$tag"'
         }
+      }
     }
 //    stage('Deploy with Helm') {
 //      steps {
