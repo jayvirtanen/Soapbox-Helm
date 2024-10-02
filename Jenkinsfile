@@ -31,6 +31,8 @@ spec:
                 - key: .dockerconfigjson
                   path: config.json
 '''
+        }
+}
   parameters {
   string defaultValue: 'myrepo/pleroma', name: 'image_name'
   string defaultValue: 'latest', name: 'tag'
