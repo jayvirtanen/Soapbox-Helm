@@ -67,10 +67,8 @@ spec:
     {
       steps{
         container('mix'){
+          withEnv([MIX_ENV=prod,OAUTH_CONSUMER_STRATEGIES="twitter facebook google microsoft slack github keycloak:ueberauth_keycloak_strategy",DEBIAN_FRONTEND=noninteractive])
           sh '''
-          MIX_ENV=prod \
-          OAUTH_CONSUMER_STRATEGIES="twitter facebook google microsoft slack github keycloak:ueberauth_keycloak_strategy" \
-          DEBIAN_FRONTEND=noninteractive
           apt-get update
           apt-get install -y git elixir erlang-dev erlang-nox build-essential cmake libssl-dev libmagic-dev automake autoconf libncurses5-dev git
           git clone https://gitlab.com/soapbox-pub/rebased
