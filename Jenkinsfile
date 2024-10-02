@@ -88,6 +88,7 @@ spec:
         container('ubuntu'){
           withEnv(['MIX_ENV=prod','OAUTH_CONSUMER_STRATEGIES=twitter facebook google','DEBIAN_FRONTEND=noninteractive']){
           sh '''
+          cd rebased
           mkdir release
           mix release --path release
           '''
