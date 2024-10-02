@@ -45,6 +45,7 @@ spec:
     stage('Gather Files'){
       steps{
       container('ubuntu'){
+      sh 'apt update'
       sh 'apt install -y curl unzip'
       sh 'curl -L https://gitlab.com/soapbox-pub/soapbox/-/jobs/artifacts/develop/download?job=build-production -o soapbox.zip'
       sh 'unzip -o soapbox.zip'
