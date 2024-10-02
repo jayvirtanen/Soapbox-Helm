@@ -45,7 +45,7 @@ spec:
     stage('Gather Files'){
       steps{
       container('ubuntu'){
-      sh 'sudo apt install -y curl unzip'
+      sh 'apt install -y curl unzip'
       sh 'curl -L https://gitlab.com/soapbox-pub/soapbox/-/jobs/artifacts/develop/download?job=build-production -o soapbox.zip'
       sh 'unzip -o soapbox.zip'
       sh "sed -i -- 's/INSTANCE_NAME/$instance_name/g' values.yaml prod.secret.exs"
