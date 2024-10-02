@@ -1,5 +1,36 @@
 pipeline {
-  agent any
+agent {
+        kubernetes {
+            yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: docker
+    image: docker
+    command:
+    - sleep
+    args:
+    - infinity
+    volumeMounts:
+      - name: jenkins-docker-cfg
+        mountPath: /dockercreds
+  - name: ubuntu
+    image: ubuntu
+    command:
+    - sleep
+    args:
+    - infinity
+  volumes:
+    - name: jenkins-docker-cfg
+      projected:
+        sources:
+          - secret:
+              name: docker-credentials
+              items:
+                - key: .dockerconfigjson
+                  path: config.json
+'''
   parameters {
   string defaultValue: 'myrepo/pleroma', name: 'image_name'
   string defaultValue: 'latest', name: 'tag'
@@ -34,11 +65,11 @@ pipeline {
             sh 'docker push "$image_name":"$tag"'
         }
     }
-    stage('Deploy with Helm') {
-      steps {
-           sh 'PATH="/usr/local/bin:${PATH}"'
-           sh '/usr/local/bin/helm upgrade --install pleroma helm/pleroma/ -f values.yaml --namespace $namespace'
-        }
-      }
+//    stage('Deploy with Helm') {
+//      steps {
+//           sh 'PATH="/usr/local/bin:${PATH}"'
+//           sh '/usr/local/bin/helm upgrade --install pleroma helm/pleroma/ -f values.yaml --namespace $namespace'
+//        }
+//      }
     }
   }
