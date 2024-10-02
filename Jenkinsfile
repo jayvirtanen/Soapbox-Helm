@@ -100,7 +100,7 @@ spec:
       steps {
         container('docker'){
         sh 'docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use'
-        sh "docker buildx build --platform linux/amd64 --push --progress plain -t $image_name ."
+        sh "docker buildx build --platform linux/amd64 --push --progress plain -t janivirtanen/pleroma ."
       }
       }
     }
