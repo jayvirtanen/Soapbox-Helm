@@ -73,6 +73,7 @@ spec:
         container('ubuntu'){
           withEnv(['MIX_ENV=prod','OAUTH_CONSUMER_STRATEGIES=twitter facebook google']){
           sh '''
+	  echo hello
           mix local.hex --force
           mix local.rebar --force
           cd rebased
