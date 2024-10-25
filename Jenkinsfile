@@ -16,7 +16,7 @@ spec:
       - name: jenkins-docker-cfg
         mountPath: /dockercreds
   - name: ubuntu
-    image: ubuntu
+    image: ubuntu:22.04
     command:
     - sleep
     args:
@@ -46,7 +46,7 @@ spec:
       steps{
       container('ubuntu'){
       sh 'apt update'
-      sh 'apt install -y curl unzip'
+      sh 'apt install -y curl unzip git elixir erlang-dev erlang-nox build-essential cmake libssl-dev libmagic-dev automake autoconf libncurses5-dev'
       sh 'curl -L https://gitlab.com/soapbox-pub/soapbox/-/jobs/artifacts/develop/download?job=build-production -o soapbox.zip'
       sh 'unzip -o soapbox.zip'
       sh "sed -i -- 's/INSTANCE_NAME/$instance_name/g' values.yaml prod.secret.exs"
@@ -57,21 +57,55 @@ spec:
       }
       }
     }
+    stage('Clone Rebased')
+    {
+      steps{
+        container('ubuntu'){
+          
+          sh '''
+          git clone https://gitlab.com/soapbox-pub/rebased
+          '''
+        }
+      }
+    }
+    stage('Mix Deps'){
+        steps{
+        container('ubuntu'){
+          withEnv(['MIX_ENV=prod','OAUTH_CONSUMER_STRATEGIES=twitter facebook google']){
+          sh '''  
+          mix local.hex --force
+          mix local.rebar --force
+          cd rebased
+          mix deps.get --only prod
+          '''
+          }
+        }
+        }
+        }
+    stage('Mix Release')
+    {
+      steps{
+        container('ubuntu'){
+          withEnv(['MIX_ENV=prod','OAUTH_CONSUMER_STRATEGIES=twitter facebook google','DEBIAN_FRONTEND=noninteractive']){
+          sh '''
+          cd rebased
+          mkdir release
+          mix release --path release
+          '''
+          }
+        }
+      }
+    }
     stage('Docker Build') {
       steps {
         container('docker'){
-        withEnv(['DOCKER_BUILDKIT=0']){
-        sh 'docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use'
-        sh "docker buildx build --platform linux/arm64,linux/amd64 --push --progress plain -t $image_name:$tag ."
-        }
+        sh '''
+        mkdir ~/.docker
+        cp /dockercreds/config.json ~/.docker/config.json
+        docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use
+        '''
+        sh "docker buildx build --platform linux/amd64 --push --progress plain -t $image_name:$tag ."
       }
-      }
-    }
-    stage('Push Docker Image'){
-        steps{
-        container('docker'){
-            sh 'docker push "$image_name":"$tag"'
-        }
       }
     }
 //    stage('Deploy with Helm') {
