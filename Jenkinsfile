@@ -67,13 +67,13 @@ spec:
       }
       }
     }
-    stage('Push Docker Image'){
-        steps{
-        container('docker'){
-            sh 'docker push "$image_name":"$tag"'
-        }
-      }
-    }
+//    stage('Push Docker Image'){
+//        steps{
+//        container('docker'){
+//            sh 'docker push "$image_name":"$tag"'
+//        }
+//      }
+//    }
 //    stage('Deploy with Helm') {
 //      steps {
 //           sh 'PATH="/usr/local/bin:${PATH}"'
