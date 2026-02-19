@@ -61,6 +61,7 @@ spec:
       steps {
         container('docker'){
         withEnv(['DOCKER_BUILDKIT=0']){
+		sh 'mkdir ~/.docker'
 		sh 'cp /dockercreds/config.json ~/.docker/config.json'
         sh 'docker buildx create --name buildkit --driver=kubernetes --driver-opt=namespace=buildkit,rootless=true --use'
         sh "docker buildx build --platform linux/amd64 --push --progress plain -t $image_name:$tag ."
